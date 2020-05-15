@@ -5,5 +5,6 @@ import AddBookForm from "./AddBook";
 import Books from "./Homepage/Books"
 import Book from "./Homepage/Book";
 import FilterSortBar from "./Homepage/FilterSortBar";
+import GoodReads from "./Goodreads/GoodReads";
 
-export { Header, Main, MainLayout, AddBookForm, Books, Book, FilterSortBar };
+export { Header, Main, MainLayout, AddBookForm, Books, Book, FilterSortBar, GoodReads};

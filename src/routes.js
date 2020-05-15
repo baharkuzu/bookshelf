@@ -1,5 +1,5 @@
 import React from "react";
-import { Homepage, AddBook } from "./containers";
+import { Homepage, AddBook, Goodreads } from "./containers";
 
 const routes = [
   {
@@ -26,6 +26,14 @@ const routes = [
       isEdit: true
     },
     component: AddBook
+  },
+  {
+    title: "Goodreads",
+    path: "/goodreads/:id",
+    exact: false,
+    componentProps: {
+    },
+    component: Goodreads
   }
 ];
 

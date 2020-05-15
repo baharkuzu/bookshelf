@@ -12,7 +12,7 @@ class MainLayout extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log("this.props:",this.props);
     const Children = this.props.children;
     return (
       <div>

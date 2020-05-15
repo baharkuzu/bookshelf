@@ -3,18 +3,20 @@ import {connect} from "react-redux";
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from "reactstrap";
 import { Formik } from "formik";
 import {categories, ratings, statuses} from "../../constants";
-import {addBook} from "../../state/ducks/books/action";
+import {addBook, editBook, deleteBook} from "../../state/ducks/books/action";
 import * as Yup from "yup";
 import {withRouter} from "react-router";
 
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is a required field"),
-    author: Yup.string().required("Author is a required field")
+    author: Yup.string().required("Author is a required field"),
+    review: Yup.string().min(30, "En az 30 karakter girmelisiniz."),
+    goodreads: Yup.string().url("https:// şeklinde giriniz.")
 });
 
 const AddBookForm = (props) => {
-    console.log(props);
+    //console.log(props);
     let initialValues = {
         title: "",
         author: "",
@@ -22,11 +24,22 @@ const AddBookForm = (props) => {
         description: "",
         rating: "",
         imageUrl: "",
-        status: ""
+        status: "",
+        review: "",
+        goodreads: ""
     };
     if(props.isEdit && props.book){
         initialValues = {...props.book};
     }
+
+    const add_or_edit = (values) => {
+      if(props.isEdit){
+        props.editBook(values, props.history, props.id);
+      }else{
+        props.addBook(values, props.history);
+      }
+    }
+
   return (
     <div>
       <Formik
@@ -34,7 +47,8 @@ const AddBookForm = (props) => {
         validationSchema={validationSchema}
         onSubmit={(values) => {
             console.log(values);
-            props.addBook(values, props.history);
+            add_or_edit(values);
+            //deleteBook(props.history, props.id);
         }}
         enableReinitialize={true}
       >
@@ -119,10 +133,38 @@ const AddBookForm = (props) => {
                       })}
                   </Input>
               </FormGroup>
+              <FormGroup>
+              <Label for="exampleText">Review</Label>
+              <Input 
+                  type="textarea" 
+                  name="review" 
+                  id="review" 
+                  value={values.review}
+                  onChange={handleChange} 
+                  invalid={errors.review}/>
+                {
+                    errors.review && <FormFeedback>{errors.review}</FormFeedback>
+                }
+              </FormGroup>
+              <FormGroup>
+              <Label for="exampleText">Goodreads Link</Label>
+              <Input 
+                  type="url" 
+                  name="goodreads" 
+                  id="goodreads" 
+                  placeholder="http://www.example.com"
+                  value={values.goodreads}
+                  onChange={handleChange} 
+                  invalid={errors.goodreads}/>
+                {
+                    errors.goodreads && <FormFeedback>{errors.goodreads}</FormFeedback>
+                }
+              </FormGroup>
               {
                   props.isEdit ?
                       <Button color="primary">Save</Button> : <Button color="primary">Add</Button>
               }
+              <Button color="danger" onClick={() => deleteBook(props.id, props.history)}>Delete</Button>
 
           </Form>
         )}
@@ -132,7 +174,9 @@ const AddBookForm = (props) => {
 };
 
 const mapDispatchToProps = {
-    addBook: addBook
+    addBook: addBook,
+    editBook: editBook,
+    deleteBook: deleteBook
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(AddBookForm));

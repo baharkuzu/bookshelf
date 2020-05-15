@@ -14,11 +14,32 @@ export const addBook = (values, history) => {
     };
 };
 
+export const deleteBook = (id, history) => {
+        axios.delete(`${apiHost}/books/${id}`).then((result) => {
+            console.log("result", result);
+            history.push("/");
+        }).catch((err) => {
+            console.log(err);
+        });
+};
+
 export const getBooks = () => {
     return dispatch => {
         dispatch({type: Actions.LOAD_BOOKS});
         axios.get(`${apiHost}/books`).then((result) => {
             dispatch({type: Actions.SET_BOOKS, payload: result.data})
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+};
+
+
+export const editBook = (values, history, id) => {
+    return dispatch => {
+        axios.put(`${apiHost}/books/${id}`, values).then((result) => {
+            dispatch({type: Actions.EDİT_BOOK, payload: result.data})
+            history.push("/");
         }).catch((err) => {
             console.log(err);
         });

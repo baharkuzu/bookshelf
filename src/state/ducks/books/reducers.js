@@ -15,6 +15,11 @@ const booksReducer = (state=initialState, action) => {
               ...state,
               data: [...state.data, action.payload]
           };
+        case Actions.EDİT_BOOK:
+            return{
+                ...state,
+                data: [...state.data, action.payload]
+            };
       case Actions.SET_BOOKS:
           return {
               ...state,
