@@ -38,10 +38,16 @@ class Homepage extends React.Component{
 
     // Sorting
     let sortedBooks = [];
-    if(this.props.sortTerm){
+    if(this.props.sortTerm === "rating"){
       sortedBooks = [...filteredBooks].sort((book1, book2) => {
-         console.log(book1, book2, this.props.sortTerm);
+         //console.log(book1, book2, this.props.sortTerm);
           return parseInt(book2[this.props.sortTerm]) - parseInt(book1[this.props.sortTerm])
+      });
+    }
+    else if(this.props.sortTerm === "alphabetical"){
+      sortedBooks = [...filteredBooks].sort((book1, book2) => {
+        //console.log(book1.title.localeCompare(book2.title))
+        return book1.title.localeCompare(book2.title, 'en', {sensitivity: 'base'})
       });
     }else{
       sortedBooks = filteredBooks;

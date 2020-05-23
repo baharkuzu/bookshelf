@@ -20,11 +20,11 @@ const AddBookForm = (props) => {
     let initialValues = {
         title: "",
         author: "",
-        category: "",
+        category: "JavaScript",
         description: "",
         rating: "",
         imageUrl: "",
-        status: "",
+        status: "Not Read",
         review: "",
         goodreads: ""
     };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Nav, Container, Row, Col, InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
+import React, {useState}from 'react';
+import { Nav, Container, Row, Col, Button, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
 import {connect} from "react-redux";
 import {StyledNavbarText, StyledInputGroup} from "./FilterSortBarStyles";
 import {categories} from "../../constants";
@@ -10,7 +10,7 @@ const FilterSortBar = (props) => {
         <div>
                 <Container fluid className="bg-white" style={{padding: "15px"}}>
                     <Row>
-                        <Col xs={6}>
+                        <Col xs={5}>
                             <Nav className="bg-white">
                                 <StyledNavbarText><strong>Categories:</strong></StyledNavbarText>
                                 <StyledNavbarText active={!props.activeFilter} onClick={() => {
@@ -34,7 +34,9 @@ const FilterSortBar = (props) => {
                                 <Input onChange={(e) => {
                                     //e.target.value
                                     props.search(e.target.value)
-                                }}/>
+                                }}
+                                
+                               placeholder="Book Name or Author"/>
                             </StyledInputGroup>
 
                             <StyledInputGroup>
@@ -47,12 +49,15 @@ const FilterSortBar = (props) => {
                                 </Input>
                             </StyledInputGroup>
                         </Col>
+                        <Col >
+                        <Button outline color="secondary" size="sm">Card</Button>{' '}  
+                        <Button outline color="secondary" size="sm">List</Button>
+                        </Col>
                     </Row>
                 </Container>
         </div>
     );
 };
-
 const mapStateToProps = (state) =>{
     return {
         activeFilter: state.books.filter

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import {connect} from "react-redux";
 import "./styles";
+import navigation from "../../navigation";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -10,10 +13,8 @@ import {
   NavLink,
   NavbarText,
 } from "reactstrap";
-import navigation from "../../navigation";
-import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

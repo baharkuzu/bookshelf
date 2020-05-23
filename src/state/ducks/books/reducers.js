@@ -5,7 +5,7 @@ const initialState = {
     loading: false,
     filter: "",
     searchTerm: "",
-    sortTerm: ""
+    sortTerm: "",
 };
 
 const booksReducer = (state=initialState, action) => {

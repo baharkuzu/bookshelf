@@ -26,6 +26,7 @@ class AddBook extends React.Component {
     render(){
         const isEdit = this.props.componentProps.isEdit;
         const id = this.props.routerProps.match.params.id;
+        console.log("addBook book:", this.state.book)
         return (
             <Row>
                 <Col xs={12}>
