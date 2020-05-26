@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback, Container } from "reactstrap";
 import { Formik } from "formik";
 import {categories, ratings, statuses} from "../../constants";
 import {addBook, editBook, deleteBook} from "../../state/ducks/books/action";
@@ -42,11 +42,11 @@ const AddBookForm = (props) => {
 
   return (
     <div>
+    <Container>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-            console.log(values);
             add_or_edit(values);
             //deleteBook(props.history, props.id);
         }}
@@ -169,6 +169,7 @@ const AddBookForm = (props) => {
           </Form>
         )}
       </Formik>
+      </Container>
     </div>
   );
 };

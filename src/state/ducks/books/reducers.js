@@ -18,7 +18,16 @@ const booksReducer = (state=initialState, action) => {
         case Actions.EDİT_BOOK:
             return{
                 ...state,
-                data: [...state.data, action.payload]
+                //data: [...state.data, action.payload]
+                data : state.data.map((book) => {
+                    if(book.id === action.payload.id){
+                        console.log("action.payload", action.payload)
+                        return action.payload;
+                    }else{
+                        console.log(book)
+                        return book;
+                    }
+                })
             };
       case Actions.SET_BOOKS:
           return {

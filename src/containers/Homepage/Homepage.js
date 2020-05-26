@@ -2,11 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import {Books, FilterSortBar} from "../../components";
 import {getBooks} from "../../state/ducks/books/action";
-import {Container} from "reactstrap";
+import {Container, Pagination, PaginationItem, PaginationLink} from "reactstrap";
+import {itemPerPage} from "../../constants";
+import {PeginationStyled} from "./HomePageStyled"
 
 class Homepage extends React.Component{
   constructor(props){
     super(props)
+
+    this.state = {
+      activePage: 1
+    }
   }
 
   componentDidMount() {
@@ -58,13 +64,56 @@ class Homepage extends React.Component{
     if(sortedBooks.length < 1){
       books = <h2>NO BOOKS HERE</h2>
     }else{
-      books = <Books items={sortedBooks}/>;
+      //Sayfada ilk 4 kitabı gösterme
+      books = <Books items={sortedBooks.slice(itemPerPage * (this.state.activePage - 1), itemPerPage * this.state.activePage)}/>;
     }
+
+    const PaginationArray = new Array(Math.ceil(sortedBooks.length / itemPerPage))
+    PaginationArray.fill(null);
+    //console.log("PaginationArray", PaginationArray);
+
     return <div>
       <FilterSortBar />
       <Container>
         <div className="books-holder">
           {books}
+          <PeginationStyled>
+            <Pagination aria-label="Page navigation example">
+              <PaginationItem disabled={this.state.activePage === 1}>
+                <PaginationLink previous href="#" onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({
+                    activePage: this.state.activePage - 1
+                  })
+                }} />
+              </PaginationItem>
+
+              {
+                PaginationArray.map((page, index) => {
+                  const pageNum = index + 1;
+                  return <PaginationItem active={pageNum === this.state.activePage}>
+                  <PaginationLink href="#" onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({
+                      activePage: pageNum
+                    })
+                  }}>
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+                })
+              }
+
+              <PaginationItem disabled={this.state.activePage === PaginationArray.length}>
+                <PaginationLink next href="#" onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({
+                    activePage: this.state.activePage + 1
+                  })
+                }}/>
+              </PaginationItem>
+            </Pagination>
+          </PeginationStyled>
         </div>
       </Container>
     </div>;
